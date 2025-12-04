@@ -595,16 +595,20 @@ function downloadPDF(){
       <div class="section"><strong>Suplementación sugerida:</strong><ul>${r.suples.map(s=>`<li>${escapeHtml(s)} — ${escapeHtml(r.suplDesc[s]||'')}</li>`).join('')}</ul></div>
       <div class="section"><strong>Qué esperar en 30 días:</strong><ul>${r.expect30.map(e=>`<li>${escapeHtml(e)}</li>`).join('')}</ul></div>
       <div class="section muted"><strong>Nota:</strong> la foto que has subido no se incluye en este PDF por privacidad.</div>
-    </div>
-    <script>window.print()</script>
-    </body></html>
-  `;
-  popup.document.open();
-  popup.document.write(html);
-  popup.document.close();
+</div>
+
+<script>window.print()</script>
+
+</body>
+</html>
+`;
+
+popup.document.open();
+popup.document.write(html);
+popup.document.close();
 }
 
-/* expose for debug */
+ /* expose for debug */
 window.runTest = runTest;
 window.resetForm = resetForm;
 window.simulateAccess = simulateAccess;
@@ -613,3 +617,4 @@ window.downloadPDF = downloadPDF;
 </script>
 </body>
 </html>
+

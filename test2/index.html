@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Test de Piel · BiancaBloomRingana — Profesional</title>
+<style>
+  :root{
+    --bg:#f4f6f4;
+    --card:#ffffff;
+    --green:#4f8e67;
+    --green-dark:#345b45;
+    --gold:#c9a84a;
+    --muted:#7f8b82;
+    --border:#e7efe8;
+    --text:#26342f;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter, "Helvetica Neue", Arial, sans-serif;background:var(--bg);color:var(--text);margin:0;padding:28px}
+  .wrap{max-width:1100px;margin:0 auto;background:var(--card);border-radius:14px;padding:28px;box-shadow:0 18px 60px rgba(30,45,30,0.06)}
+  header{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+  header h1{margin:0;color:var(--green-dark);font-size:30px}
+  header p{margin:0;color:var(--muted);font-style:italic}
+  .grid{display:grid;grid-template-columns:1fr 380px;gap:22px;margin-top:18px}
+  @media(max-width:980px){.grid{grid-template-columns:1fr;padding:0 12px}}
+  .panel{background:var(--card);border:1px solid var(--border);padding:18px;border-radius:12px}
+  label{display:block;font-weight:700;margin-top:12px;margin-bottom:6px}
+  select,input[type=text],input[type=file],textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #e6efe6;background:#fff}
+  .btn{background:var(--green);color:#fff;padding:12px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid var(--green-dark);color:var(--green-dark)}
+  .muted{color:var(--muted);font-size:13px}
+  .section-title{font-weight:800;color:var(--green-dark);margin-bottom:8px}
+  .box{background:linear-gradient(180deg,#fbfff8,#f7fbf2);padding:12px;border-radius:10px;border:1px solid #eef6ee}
+  .result-card{background:linear-gradient(180deg,#fff,#fbfffb);border-left:6px solid var(--gold);padding:14px;border-radius:8px}
+  .share{display:flex;gap:8px;margin-top:10px}
+  .share a{display:inline-block;padding:8px 10px;border-radius:8px;background:#fff;border:1px solid #f0f2f0;color:var(--green-dark);text-decoration:none;font-weight:700}
+  .preview{max-width:100%;border-radius:8px;margin-top:8px;border:1px solid #e6efe6}
+  ul{line-height:1.45;margin:8px 0}
+  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+  .note{font-size:13px;color:#8b978c;margin-top:8px}
+  .danger{color:#882b2b;font-weight:700}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mini{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <header>
+    <h1>Test de Piel · BiancaBloomRingana — Profesional</h1>
+    <p>Ética y excelencia: el cóctel infalible.</p>
+    <div class="muted">Informe dermatológico completo • Foto opcional • Descarga PDF profesional</div>
+  </header>
+
+  <!-- ACCESS GATE -->
+  <div id="accessGate" class="panel" style="margin-top:18px">
+    <div class="section-title">Acceso seguro</div>
+    <p class="muted">Para asegurar que solo clientas registradas usan este test, requiere <code>?registered=true</code> o simulación para pruebas.</p>
+
+    <label>Tu enlace de registro Ringana</label>
+    <input id="registerLink" value="https://www.ringana.com/es/4577798" />
+
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="btn" id="openRegBtn">Ir al registro</button>
+      <button class="btn ghost" onclick="simulateAccess()">Simular registro (pruebas)</button>
+    </div>
+
+    <p class="note">Sustituye el enlace por tu enlace personal. Tras registrarse, la confirmación debe redirigir con <code>?registered=true</code>.</p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div id="mainGrid" class="grid" style="display:none">
+    <div>
+      <div class="panel" id="formPanel">
+        <div class="section-title">1 — Diagnóstico extensivo (preguntas puntuables)</div>
+
+        <!-- Row group: personal and exposure -->
+        <div class="two-col">
+          <div>
+            <label>1. Rango de edad</label>
+            <select id="q1">
+              <option value="0">Menos de 25</option><option value="1">26–35</option>
+              <option value="2">36–45</option><option value="3">46–55</option><option value="4">Más de 55</option>
+            </select>
+          </div>
+          <div>
+            <label>2. Sexo</label>
+            <select id="q2"><option value="0">Femenino</option><option value="0">Masculino</option><option value="0">Prefiero no decir</option></select>
+          </div>
+        </div>
+
+        <label>3. ¿Tomas el sol sin protección a menudo?</label>
+        <select id="q3"><option value="0">Nunca</option><option value="1">Ocasional</option><option value="2">A menudo</option></select>
+
+        <label>4. ¿Trabajas muchas horas en interiores con AC o calefacción?</label>
+        <select id="q4"><option value="0">No</option><option value="1">Sí, a veces</option><option value="2">Sí, a diario</option></select>
+
+        <label>5. Textura preferida (producto)</label>
+        <select id="q5"><option value="0">Ligera</option><option value="1">Media</option><option value="2">Nutritiva</option></select>
+
+        <label>6. Consumo de alcohol</label>
+        <select id="q6"><option value="0">No</option><option value="1">Ocasional</option><option value="2">Regular</option></select>
+
+        <label>7. ¿Tienes impurezas (granos, puntos negros)?</label>
+        <select id="q7"><option value="0">Sí</option><option value="1">No</option></select>
+
+        <label>8. ¿Tienes arrugas visibles?</label>
+        <select id="q8"><option value="0">No</option><option value="2">Sí</option></select>
+
+        <label>9. ¿Vives en zona urbana con contaminación?</label>
+        <select id="q9"><option value="0">No</option><option value="1">Sí</option></select>
+
+        <label>10. Tiempo de ejercicio semanal</label>
+        <select id="q10"><option value="0">&gt;1h</option><option value="1">30–60min</option><option value="2">&lt;30min</option></select>
+
+        <label>11. Complexión corporal</label>
+        <select id="q11"><option value="2">Bajo peso</option><option value="0">Normal</option><option value="1">Sobrepeso</option></select>
+
+        <label>12. Pasas muchas horas en climatización</label>
+        <select id="q12"><option value="0">No</option><option value="1">Sí</option></select>
+
+        <label>13. Alimentación (frutas/verduras/agua)</label>
+        <select id="q13"><option value="0">Cuido mucho</option><option value="1">A veces</option><option value="2">No</option></select>
+
+        <label>14. Fumas</label>
+        <select id="q14"><option value="0">No</option><option value="1">&lt;10/día</option><option value="2">≥10/día</option></select>
+
+        <label>15. Poros visibles</label>
+        <select id="q15"><option value="0">Sí</option><option value="1">No</option></select>
+
+        <label>16. ¿Se irrita tu piel con facilidad?</label>
+        <select id="q16"><option value="2">Sí</option><option value="0">No</option></select>
+
+        <div class="section-title" style="margin-top:18px">2 — Historial & contexto (no puntuable)</div>
+        <label>17. Enfermedades / medicación relevante</label>
+        <input id="q17" type="text" placeholder="Ej. rosácea, isotretinoína, antihipertensivos..." />
+
+        <label>18. Cirugías / tratamientos estéticos recientes (6 meses)</label>
+        <input id="q18" type="text" placeholder="Ej. peelings, laser, rellenos..." />
+
+        <label>19. Historial familiar (acné, eczema, alergias)</label>
+        <input id="q19" type="text" placeholder="Ej. madre con rosácea" />
+
+        <div class="section-title" style="margin-top:18px">3 — Preferencias & objetivos</div>
+        <label>20. Sensibilidad de la piel</label>
+        <select id="q20"><option value="calm">Muy sensible / reactiva</option><option value="pure">Normal / impurezas</option><option value="tolerant">Resistente / tolera activos</option></select>
+
+        <label>21. Prioridad principal ahora</label>
+        <select id="q21"><option value="hydro">Hidratación</option><option value="antiage">Antiedad</option><option value="clarify">Clarificar poros / impurezas</option><option value="calm">Calmar rojeces</option></select>
+
+        <label>22. ¿Toleras activos potentes por la noche (retinoides, AHA/BHA)?</label>
+        <select id="q22"><option value="overnight">Sí</option><option value="gentle">No — prefiero suaves</option></select>
+
+        <div style="margin-top:12px" class="muted">Objetivos secundarios</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+          <label><input type="checkbox" class="obj" value="firm"> Reafirmar</label>
+          <label><input type="checkbox" class="obj" value="glow"> Luminosidad</label>
+          <label><input type="checkbox" class="obj" value="repair"> Calmar / reparar</label>
+          <label><input type="checkbox" class="obj" value="eye"> Contorno ojos</label>
+        </div>
+
+        <div class="section-title" style="margin-top:18px">4 — Foto opcional</div>
+        <label>Sube una foto clara (frontal o lado). Opcional pero ayuda al diagnóstico.</label>
+        <input id="fotoInput" type="file" accept="image/*" />
+        <img id="fotoPreview" class="preview" style="display:none" alt="Previsualización" />
+
+        <div style="margin-top:14px;display:flex;gap:10px">
+          <button class="btn" onclick="runTest()">Generar informe profesional</button>
+          <button class="btn ghost" onclick="resetForm()">Reiniciar</button>
+        </div>
+        <p class="note">Las recomendaciones son orientativas. En embarazo, lactancia o medicación consultad con profesional.</p>
+      </div>
+
+      <!-- Result panel -->
+      <div id="resultPanel" class="panel" style="margin-top:14px;display:none">
+        <div class="section-title">Informe dermatológico profesional</div>
+        <div id="diagnosis"></div>
+        <div id="routine"></div>
+        <div id="supplements"></div>
+        <div id="expectations"></div>
+        <div style="margin-top:12px" class="muted">Compartir / descargar</div>
+        <div class="share" id="shareWrap" style="display:none">
+          <a id="mailto" href="#">Enviar por email</a>
+          <a id="wa" href="#" target="_blank">Enviar por WhatsApp</a>
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn" onclick="downloadPDF()">Descargar informe PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="panel box">
+        <div class="section-title">Acceso & ayuda</div>
+        <p class="muted">Si te registras con tu enlace y la confirmación redirige con <code>?registered=true</code>, el test se desbloquea automáticamente.</p>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn ghost" onclick="copyRegisterLink()">Copiar enlace</button>
+          <button class="btn ghost" onclick="togglePreview()">Ocultar/Mostrar foto</button>
+        </div>
+        <p class="note" style="margin-top:10px"><strong>Nota legal:</strong> las recomendaciones no sustituyen una consulta médica. Evita suplementos en embarazo sin consultor.</p>
+      </div>
+
+      <div class="panel" style="margin-top:14px">
+        <div class="section-title">Qué incluye este informe</div>
+        <ul class="mini">
+          <li>Diagnóstico estructurado (tipo + subtipos)</li>
+          <li>Rutina AM / PM detallada con prioridades</li>
+          <li>Selección de hasta 3 suplementos (priorizada)</li>
+          <li>Qué esperar en 30 días</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <footer style="margin-top:18px">Test desarrollado para <strong>BiancaBloomRingana</strong> — uso profesional y orientativo.</footer>
+</div>
+
+<script>
+/* ---------- Access gate logic ---------- */
+const params = new URLSearchParams(location.search);
+const isRegistered = params.get('registered') === 'true' || localStorage.getItem('ringana_registered') === 'true';
+
+const registerInput = document.getElementById('registerLink');
+document.getElementById('openRegBtn').addEventListener('click', ()=>{
+  const url = (registerInput && registerInput.value)? registerInput.value.trim() : '';
+  if(!url){ alert('Introduce tu enlace de registro.'); return; }
+  window.open(url,'_blank');
+});
+
+function simulateAccess(){
+  localStorage.setItem('ringana_registered','true');
+  showMain();
+}
+
+function showMain(){
+  document.getElementById('accessGate').style.display = 'none';
+  document.getElementById('mainGrid').style.display = 'grid';
+}
+
+if(isRegistered) showMain();
+
+/* ---------- Helpers ---------- */
+function intval(v){ const n = Number.parseInt(String(v).replace(/[^\d-]/g,''),10); return Number.isNaN(n)?0:n; }
+function escapeHtml(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function copyRegisterLink(){
+  try{ navigator.clipboard.writeText(document.getElementById('registerLink').value); alert('Enlace copiado'); }
+  catch(e){ prompt('Copia este enlace', document.getElementById('registerLink').value); }
+}
+
+/* ---------- Photo preview ---------- */
+const fotoInput = document.getElementById('fotoInput');
+const fotoPreview = document.getElementById('fotoPreview');
+let uploadedPhotoData = null;
+fotoInput.addEventListener('change', e=>{
+  const f = e.target.files && e.target.files[0];
+  if(!f){ fotoPreview.style.display='none'; uploadedPhotoData=null; return; }
+  const reader = new FileReader();
+  reader.onload = ()=>{ uploadedPhotoData = reader.result; fotoPreview.src = uploadedPhotoData; fotoPreview.style.display='block'; }
+  reader.readAsDataURL(f);
+});
+
+function togglePreview(){
+  if(!fotoPreview) return;
+  fotoPreview.style.display = (fotoPreview.style.display === 'none' || fotoPreview.style.display === '') ? 'block' : 'none';
+}
+
+/* ---------- Core logic (advanced) ---------- */
+function runTest(){
+  // validate
+  for(let i=1;i<=16;i++){
+    const el = document.getElementById('q'+i);
+    if(!el){ alert('Falta la pregunta ' + i); return; }
+  }
+
+  // gather answers
+  const answers = {};
+  for(let i=1;i<=16;i++) answers['q'+i] = intval(document.getElementById('q'+i).value);
+  const q1 = intval(document.getElementById('q1').value); // age
+  const q3 = intval(document.getElementById('q3').value); // sun
+  const q7 = intval(document.getElementById('q7').value); // impurezas
+  const q8 = intval(document.getElementById('q8').value); // arrugas
+  const q12 = intval(document.getElementById('q12').value); // AC
+  const q13 = intval(document.getElementById('q13').value); // diet
+  const q14 = intval(document.getElementById('q14').value); // smoke
+  const q10 = intval(document.getElementById('q10').value); // exercise
+  const q15 = intval(document.getElementById('q15').value); // pores
+  const q16 = intval(document.getElementById('q16').value); // irritability
+  const q20 = document.getElementById('q20').value;
+  const priority = document.getElementById('q21').value;
+  const night = document.getElementById('q22').value;
+  const objectives = Array.from(document.querySelectorAll('.obj:checked')).map(x=>x.value);
+  const hasCondition = (document.getElementById('q17').value || '').trim().length > 0;
+
+  // score calculation (robust)
+  let total = 0;
+  for(let i=1;i<=16;i++) total += intval(document.getElementById('q'+i).value);
+
+  // base type heuristics
+  // lower total -> oilier, higher total -> drier (tuned)
+  let tipoBase = total <= 18 ? 'Piel Grasa' : (total <= 32 ? 'Piel Mixta' : 'Piel Seca');
+
+  // subtypes
+  const dehydratedFactors = (q12===1 || q13>=1 || q10===2);
+  const likelyDehydrated = dehydratedFactors && tipoBase !== 'Piel Seca';
+  const asfixiada = (tipoBase === 'Piel Grasa' || tipoBase === 'Piel Mixta') && q7===0 && q15===0 && likelyDehydrated;
+  const isMature = (q1 >= 3) || q8>=2;
+  const reactive = q20 === 'calm' || hasCondition || q16 === 2;
+
+  const subtypeNotes = [];
+  if(likelyDehydrated) subtypeNotes.push('Tendencia a DESHIDRATACIÓN');
+  if(asfixiada) subtypeNotes.push('Piel ASFIXIADA (grasa + poros obstruidos + deshidratada)');
+  if(isMature) subtypeNotes.push('Piel MÁTURA (prioridad antiedad)');
+  if(reactive) subtypeNotes.push('Piel REACTIVA / sensible');
+
+  // ------------------ product mapping (Ringana-like) ------------------
+  const PROD = {
+    cleanser_suave: 'FRESH Cleanser (suave)',
+    cleanser_purificante: 'FRESH Cleanser Purificante',
+    tonic_calm: 'Tonic Calm',
+    tonic_pure: 'Tonic Pure',
+    hydro_serum: 'FRESH Hydro Serum',
+    cream_light: 'FRESH Cream Light',
+    cream_medium: 'FRESH Cream Medium',
+    cream_rich: 'FRESH Cream Rich',
+    add_effect: 'ADDS Effect',
+    add_glow: 'ADDS Glow',
+    add_repair: 'ADDS Repair',
+    overnight_repair: 'Overnight Repair',
+    skin_perfection: 'Skin Perfection (noche)',
+    eye_serum: 'Eye Serum',
+    bha_exfol: 'Exfoliante químico suave (BHA/AHA)'
+  };
+
+  // ------------------ routine logic ------------------
+  const routineAM = [];
+  const routinePM = [];
+
+  // Cleanser selection
+  if(tipoBase === 'Piel Grasa' || asfixiada) routineAM.push(PROD.cleanser_purificante), routinePM.push(PROD.cleanser_purificante);
+  else routineAM.push(PROD.cleanser_suave), routinePM.push(PROD.cleanser_suave);
+
+  // Tónico
+  if(tipoBase === 'Piel Grasa'){
+    if(reactive) { routineAM.push(PROD.tonic_calm); routinePM.push(PROD.tonic_calm); }
+    else { routineAM.push(PROD.tonic_pure); routinePM.push(PROD.tonic_pure); }
+  } else if(tipoBase === 'Piel Mixta'){
+    routineAM.push(reactive?PROD.tonic_calm:PROD.tonic_pure);
+    routinePM.push(reactive?PROD.tonic_calm:PROD.tonic_pure);
+  } else {
+    routineAM.push(PROD.tonic_calm);
+    routinePM.push(PROD.tonic_calm);
+  }
+
+  // Serum
+  if(asfixiada){ routineAM.push(PROD.hydro_serum); routinePM.push(PROD.hydro_serum); routinePM.push(PROD.bha_exfol||PROD.bha_exfol); }
+  else { routineAM.push(PROD.hydro_serum); routinePM.push(PROD.hydro_serum); }
+
+  // Cream selection
+  if(tipoBase === 'Piel Grasa'){ routineAM.push(PROD.cream_light); routinePM.push(PROD.cream_light); }
+  if(tipoBase === 'Piel Mixta'){ routineAM.push(PROD.cream_medium); routinePM.push(PROD.cream_medium); }
+  if(tipoBase === 'Piel Seca'){ routineAM.push(PROD.cream_rich); routinePM.push(PROD.cream_rich); }
+
+  // Priority addons
+  if(priority === 'antiage' || isMature){ routineAM.push(PROD.add_effect); }
+  if(priority === 'hydro' || likelyDehydrated){ routineAM.push(PROD.add_glow); routinePM.push(PROD.add_glow); }
+  if(priority === 'clarify' && (tipoBase === 'Piel Grasa' || tipoBase === 'Piel Mixta')){ routinePM.push(PROD.bha_exfol); }
+
+  // Night actives tolerance
+  if(night === 'overnight' && !reactive){
+    routinePM.push(PROD.overnight_repair);
+  } else {
+    routinePM.push(PROD.skin_perfection);
+  }
+
+  // Eye
+  if(objectives.includes('eye')) routineAM.push(PROD.eye_serum), routinePM.push(PROD.eye_serum);
+
+  // Extras by objectives
+  if(objectives.includes('glow')) routineAM.push(PROD.add_glow);
+  if(objectives.includes('firm')) routineAM.push(PROD.add_effect);
+
+  // Practical tips
+  const practical = [];
+  practical.push('Protector solar SPF30+ cada mañana y reaplicar si hay exposición.');
+  if(q3>=1) practical.push('Evitar exposiciones largas y usar fotoprotector físico.');
+  if(q12===1) practical.push('Aumentar hidratación si pasas mucho tiempo en climatización.');
+  if(reactive) practical.push('Introducir activos de uno en uno; hacer patch-test.');
+
+  // ------------------ supplements logic (máx 3) ------------------
+  const supplements = [];
+  function addSup(s){
+    if(!s) return;
+    if(supplements.indexOf(s) === -1 && supplements.length < 3) supplements.push(s);
+  }
+  if(tipoBase === 'Piel Grasa') addSup('CAPS Skin');
+  if(tipoBase === 'Piel Mixta') addSup('CAPS Antiox');
+  if(tipoBase === 'Piel Seca') addSup('CAPS Hyaluron');
+  if(reactive) addSup('CAPS Protect');
+  if(isMature) addSup('CAPS Omega 3');
+  if(q3>=1 || q9===1) addSup('CAPS Antiox');
+  if(q12===1) addSup('CAPS Hyaluron');
+  if(q13>=1 || q6>=1) addSup('PACK Cleansing');
+  if(supplements.length===0) addSup('CAPS Antiox');
+
+  const suplDesc = {
+    'CAPS Skin':'Apoya el equilibrio del microbioma y regula impurezas.',
+    'CAPS Hyaluron':'Hialurónico oral para hidratación interna y elasticidad.',
+    'CAPS Protect':'Refuerza barrera cutánea y reduce sensibilidad.',
+    'CAPS Antiox':'Antioxidantes para contaminación y daño solar.',
+    'CAPS Omega 3':'Ácidos grasos para inflamación y salud de la piel.',
+    'PACK Cleansing':'Apoyo detox y función hepática (para piel apagada).'
+  };
+
+  // ------------------ Build output HTML ------------------
+  const subtypeText = subtypeNotes.length ? subtypeNotes.join(' • ') : 'Sin subtipo detectado';
+  const diagHtml = `<div class="result-card">
+    <h3>Tipo base: ${escapeHtml(tipoBase)}</h3>
+    <div class="muted">${escapeHtml(subtypeText)}</div>
+    <p style="margin-top:8px"><strong>Puntuación:</strong> ${total} puntos</p>
+    <p class="mini"><strong>Se han tenido en cuenta:</strong> edad, exposición solar, hidratación, poros, sensibilidad, hábitos.</p>
+  </div>`;
+
+  const routineHtml = `<div style="margin-top:12px">
+    <h4>Rutina recomendada</h4>
+    <div style="display:flex;gap:12px">
+      <div style="flex:1">
+        <strong>AM</strong>
+        <ul>${routineAM.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>
+      </div>
+      <div style="flex:1">
+        <strong>PM</strong>
+        <ul>${routinePM.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>
+      </div>
+    </div>
+    <div style="margin-top:8px"><strong>Consejos prácticos:</strong><ul>${practical.map(p=>`<li>${escapeHtml(p)}</li>`).join('')}</ul></div>
+  </div>`;
+
+  const suplHtml = `<div style="margin-top:12px">
+    <h4>Suplementación sugerida (máx 3)</h4>
+    <ul>${supplements.map(s=>`<li><strong>${escapeHtml(s)}</strong> — ${escapeHtml(suplDesc[s]||'')}</li>`).join('')}</ul>
+  </div>`;
+
+  const expectHtml = `<div style="margin-top:12px">
+    <h4>Qué esperar en 30 días</h4>
+    <ul>
+      <li>Mejoría visible en hidratación y textura con constancia.</li>
+      <li>Reducción de brillos y poros con exfoliación suave (4–8 semanas).</li>
+      <li>Menos rojeces con productos calmantes y evitando irritantes (2–6 semanas).</li>
+    </ul>
+  </div>`;
+
+  document.getElementById('diagnosis').innerHTML = diagHtml;
+  document.getElementById('routine').innerHTML = routineHtml;
+  document.getElementById('supplements').innerHTML = suplHtml;
+  document.getElementById('expectations').innerHTML = expectHtml;
+
+  // share links
+  const subj = encodeURIComponent('Mi informe de piel · BiancaBloomRingana');
+  const body = encodeURIComponent(`Diagnóstico: ${tipoBase}\nSubtipos: ${subtypeNotes.join(', ') || 'N/A'}\nRutina AM: ${routineAM.join(' | ')}\nSuplementos: ${supplements.join(', ')}`);
+  document.getElementById('mailto').href = `mailto:?subject=${subj}&body=${body}`;
+  document.getElementById('wa').href = `https://wa.me/?text=${encodeURIComponent('Mi diagnóstico Ringana: '+tipoBase+' — por favor revisa.')}`;
+
+  document.getElementById('resultPanel').style.display = 'block';
+  document.getElementById('shareWrap').style.display = 'flex';
+
+  // snapshot
+  window._lastResult = {
+    tipoBase, subtypeNotes, total,
+    routineAM, routinePM, practical, supplements, suplDesc,
+    photo: uploadedPhotoData
+  };
+
+  // scroll to result
+  document.getElementById('resultPanel').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- Reset ---------- */
+function resetForm(){
+  for(let i=1;i<=22;i++){
+    const el = document.getElementById('q'+i);
+    if(el && el.tagName==='SELECT') el.selectedIndex = 0;
+    if(el && el.tagName==='INPUT' && el.type==='text') el.value = '';
+  }
+  const checks = document.querySelectorAll('.obj');
+  checks.forEach(c=>c.checked=false);
+  document.getElementById('resultPanel').style.display = 'none';
+  document.getElementById('shareWrap').style.display = 'none';
+  localStorage.removeItem('ringana_registered');
+  uploadedPhotoData = null;
+  if(fotoPreview){ fotoPreview.style.display='none'; fotoPreview.src=''; }
+}
+
+/* ---------- PDF generation (professional) ---------- */
+function downloadPDF(){
+  const r = window._lastResult;
+  if(!r) return alert('Primero genera el informe.');
+
+  const photoSection = r.photo ? `<div style="margin-top:12px"><strong>Foto enviada (opcional):</strong>
+    <div style="margin-top:8px"><img src="${r.photo}" style="max-width:360px;border-radius:8px;border:1px solid #e6efe6" /></div></div>` : '';
+
+  const amHtml = r.routineAM.map(x=>`<li>${escapeHtml(x)}</li>`).join('');
+  const pmHtml = r.routinePM.map(x=>`<li>${escapeHtml(x)}</li>`).join('');
+  const suplHtml = r.supplements.map(s=>`<li><strong>${escapeHtml(s)}</strong> — ${escapeHtml(r.suplDesc[s]||'')}</li>`).join('');
+
+  const html = `
+  <html><head><meta charset="utf-8"/><title>Informe · ${escapeHtml(r.tipoBase)}</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;padding:24px;color:#223;background:#fff}
+    h1{color:#345b45;text-align:center}
+    .box{border-radius:10px;padding:16px;background:#fbfffb;border:1px solid #eef6ee;margin-top:12px}
+    ul{line-height:1.4}
+    .muted{color:#66786e;font-size:13px}
+  </style>
+  </head><body>
+    <h1>Informe de Piel · BiancaBloomRingana</h1>
+    <p class="muted" style="text-align:center">Ética y excelencia: el cóctel infalible.</p>
+
+    <div class="box">
+      <p><strong>Tipo:</strong> ${escapeHtml(r.tipoBase)}</p>
+      <p class="muted">${r.subtypeNotes.length ? escapeHtml(r.subtypeNotes.join(' • ')) : 'Sin subtipo detectado'}</p>
+      <p><strong>Puntuación base:</strong> ${r.total}</p>
+
+      <h3>Rutina AM</h3><ul>${amHtml}</ul>
+      <h3>Rutina PM</h3><ul>${pmHtml}</ul>
+
+      <h3>Suplementación sugerida</h3><ul>${suplHtml}</ul>
+
+      ${photoSection}
+
+      <h3>¿Qué esperar en 30 días?</h3>
+      <ul>
+        <li>Mejoría en hidratación y textura con cumplimiento diario.</li>
+        <li>Disminución de brillos y poros con exfoliación suave.</li>
+        <li>Reducción de rojeces con productos calmantes.</li>
+      </ul>
+
+      <p class="muted">Nota: recomendaciones orientativas. Consulta profesional en embarazo, lactancia o medicación.</p>
+    </div>
+
+    <script>window.print()<\/script>
+  </body></html>`;
+
+  const popup = window.open('','_blank','width=900,height=900');
+  popup.document.open();
+  popup.document.write(html);
+  popup.document.close();
+}
+
+/* expose for debug */
+window.runTest = runTest;
+window.resetForm = resetForm;
+window.simulateAccess = simulateAccess;
+window.downloadPDF = downloadPDF;
+
+</script>
+</body>
+</html>
